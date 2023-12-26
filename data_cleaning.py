@@ -3,7 +3,15 @@
 import numpy as np
 import pandas as pd
 
-if __name__ == "__main":
-    df = pd.read_csv('resources/start_funding.csv')
 
-    print(df.head())
+class Cleaner:
+
+    @staticmethod
+    def cols(df):
+        print(df.columns)
+
+
+if __name__ == "__main__":
+    data = pd.read_csv('resources/startup_funding.csv')
+
+    Cleaner.cols(data)

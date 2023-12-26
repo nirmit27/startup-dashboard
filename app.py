@@ -1,7 +1,7 @@
 """ Root of the Web Application """
 
-# import time as t
-# import numpy as np
+import time as t
+import numpy as np
 import pandas as pd
 import streamlit as st
 
@@ -9,7 +9,7 @@ if __name__ == "__main__":
     # ---------------------------- C O N T E N T ---------------------------- #
 
     st.markdown("""
-    <h1 style="text-align: center; color: lightgreen; margin-bottom: 30px">
+    <h1 style="text-align: center; color: lightblue; margin-bottom: 30px">
     Indian Startup Funding Dashboard
     </h1>
     """, unsafe_allow_html=True)
