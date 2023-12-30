@@ -2,7 +2,7 @@
 
 import pandas as pd
 import streamlit as st
-from data_cleaning import Data
+from data_fetch import Data
 import plotly.express as px
 
 # Utility functions ...
