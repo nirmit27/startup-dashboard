@@ -97,7 +97,6 @@ class Data:
         res = df[df['startup'] == name]['investors']
         res = res.reset_index(drop=True)
         res.index = res.index + 1
-        # res.set_index('index', inplace=True)
         return res
 
     # ---------------------------------------------------------------------------------- #
