@@ -5,7 +5,7 @@ import streamlit as st
 from data_fetch import Data
 import plotly.express as px
 
-# Utility functions ...
+# Utility functions
 
 
 def lb(n=1):  # line breaks
@@ -23,7 +23,7 @@ def page_header(title, color):
     """, unsafe_allow_html=True)
 
 
-# Dataset ...
+# Dataset
 
 df = pd.read_csv('resources/startup_cleaned.csv')
 
