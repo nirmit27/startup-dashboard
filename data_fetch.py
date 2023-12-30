@@ -69,3 +69,46 @@ class Data:
     # ---------------------------------------------------------------------------------- #
 
     # ------------------------------------- Page 2 ------------------------------------- #
+
+    # Startup Analysis
+
+    # Startup details ...
+
+    @staticmethod
+    def sup(df, name):
+        res = df[df['startup'] == name][['date', 'vertical',
+                                         'subvertical', 'city', 'round', 'amount']]
+        res.rename(columns={'amount': 'amount in Cr.'}, inplace=True)
+        res.set_index('date', inplace=True)
+        return res.head()
+
+    # Startup round investment ...
+
+    @staticmethod
+    def stg(df, name):
+        res = df[df['startup'] == name].groupby(
+            'round')['amount'].sum()
+        return res.head()
+
+    # Startup investor(s) ...
+
+    @staticmethod
+    def sinv(df, name):
+        res = df[df['startup'] == name]['investors']
+        res = res.reset_index(drop=True)
+        res.index = res.index + 1
+        # res.set_index('index', inplace=True)
+        return res
+
+    # ---------------------------------------------------------------------------------- #
+
+    # ------------------------------------- Page 3 ------------------------------------- #
+
+    # Investor Analysis
+
+    @staticmethod
+    def inv(df, name):
+        res = df[df['investors'] == name]
+        return res.head()
+
+    # ---------------------------------------------------------------------------------- #

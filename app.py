@@ -17,9 +17,17 @@ def lb(n=1):  # line breaks
 
 def page_header(title, color):
     st.markdown(f"""
-    <h1 style="text-align: center; color: {color}; margin-bottom: 30px; font-size: 2. 8rem">
+    <h1 style="text-align: center; color: {color}; font-size: 2.8rem">
     {title}
     </h1>
+    """, unsafe_allow_html=True)
+
+
+def text(txt):
+    st.markdown(f"""
+    <p style="text-align: center; font-size: 1.5rem">
+    {txt}
+    </p>
     """, unsafe_allow_html=True)
 
 
@@ -36,7 +44,7 @@ st.set_page_config(layout='wide', page_title='Startup Analysis', page_icon='📊
 
 def main():
     page_header(title='Indian Startup Funding Dashboard', color='lightblue')
-    lb(2)
+    lb(4)
     c1, c2, c3 = st.columns((3, 10, 3), gap='medium')
     with c2:
         st.image('resources/dataset-cover.jpg',
@@ -55,7 +63,7 @@ def overall():
 
     # Data items ...
 
-    sdf = df.groupby('startup').amount
+    sdf = df.groupby(by="startup").amount
 
     total = round(df.amount.sum() / 10000)
 
@@ -118,20 +126,60 @@ def overall():
         top5 = px.pie(
             labels=cp.head().values,
             names=cp.head().index,
-            height=490,
-            width=500,
+            height=480,
             color_discrete_sequence=px.colors.sequential.dense_r,
             hole=0.4
         )
         st.plotly_chart(top5)
-        lb()
 
+        lb()
         st.subheader('Top 5 Investors')
         lb()
 
         year2 = st.slider('Choose year for Investors', 2015, 2020, 2017)
         top5 = Data.top5inv(df, year2)
         st.dataframe(top5, width=600)
+
+
+def startups(btn1, df, startup):
+    if btn1:
+        dfs = Data.sup(df, startup)
+        rnd = Data.stg(df, startup)
+        inv = Data.sinv(df, startup)
+
+        pad1, col, pad2 = st.columns((2, 8, 2), gap='small')
+
+        with col:
+            lb()
+            st.header(startup)
+            st.divider()
+            st.subheader('Overall details')
+            st.dataframe(dfs)
+            lb()
+
+            st.subheader('Stage')
+            st.dataframe(rnd)
+            lb()
+
+            st.subheader("Investor(s)")
+            st.dataframe(inv)
+
+    else:
+        lb(2)
+        text("Select a <b style='color:lightblue'>startup</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
+
+
+def investors(btn2, df, investor):
+    if btn2:
+        lb()
+        st.header(investor)
+        st.divider()
+        dfi = Data.inv(df, investor)
+        st.dataframe(dfi)
+
+    else:
+        lb(2)
+        text("Select an <b style='color:lightblue'>investor</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
 
 # ----------------------------------------------------------------------------------- #
 
@@ -151,21 +199,16 @@ match option:
     case "Overall Analysis":
         overall()
     case "Startups":
+        page_header(title="Startup Analysis", color="lightgreen")
         startup = st.sidebar.selectbox(
-            "Choose startup", df['startup'].unique().tolist())
+            "Select a startup", df['startup'].unique().tolist())
         btn1 = st.sidebar.button('Find Startup details')
-        st.header("Startup Analysis")
-        if btn1:
-            lb(1)
-            st.subheader(f"{startup}")
-            st.divider()
+        startups(btn1, df, startup)
     case "Investors":
+        page_header(title="Investor Analysis", color="lightgreen")
         investor = st.sidebar.selectbox(
-            "Choose startup", df['investor'].unique().tolist())
+            "Select an investor", df['investors'].unique().tolist())
         btn2 = st.sidebar.button('Find Investor details')
-        st.header("Investor Analysis")
-        if btn2:
-            lb(1)
-            st.subheader(f"{investor}")
-            st.divider()
+        investors(btn2, df, investor)
+
 # ----------------------------------------------------------------------------------- #
