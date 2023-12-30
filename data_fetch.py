@@ -48,6 +48,7 @@ class Data:
     def top5st(df, y):
         top5 = df.groupby(['startup', 'year', 'month'])[
             'amount'].sum().reset_index()
+        top5['amount'] = top5['amount'] / 10000
         top5.rename(columns={'amount': "Amount in Cr.",
                     'month': 'Month', 'startup': 'Startup'}, inplace=True)
         top5.set_index('Startup', inplace=True)
@@ -59,6 +60,7 @@ class Data:
     def top5inv(df, y):
         top5 = df.groupby(['investors', 'year', 'month'])[
             'amount'].sum().reset_index()
+        top5['amount'] = top5['amount'] / 10000
         top5.rename(columns={'amount': "Amount in Cr.",
                     'month': 'Month', 'investors': 'Investor'}, inplace=True)
         top5.set_index('Investor', inplace=True)
