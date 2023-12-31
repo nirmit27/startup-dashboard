@@ -55,7 +55,7 @@ st.markdown(
 
 def main():
     page_header(title='Indian Startup Funding Dashboard',
-                color='lightblue', size=2.8, top=30)
+                color='lightblue', size=2.8)
     lb(2)
     c1, c2, c3 = st.columns((3, 10, 3), gap='medium')
     with c2:
@@ -155,19 +155,20 @@ def startups(btn1, df, startup):
         pad1, col, pad2 = st.columns((2, 8, 2), gap='small')
 
         with col:
-            lb()
             st.header(startup)
             st.divider()
             st.subheader('Overall details')
             st.dataframe(dfs)
-            lb()
 
-            st.subheader('Stage')
-            st.dataframe(rnd)
-            lb()
+            c1, pad, c2 = st.columns((10, 1, 10), gap='small')
 
-            st.subheader("Investor(s)")
-            st.dataframe(inv)
+            with c1:
+                st.subheader('Stage')
+                st.dataframe(rnd)
+
+            with c2:
+                st.subheader("Investor(s)")
+                st.dataframe(inv)
 
     else:
         lb(2)
@@ -204,7 +205,7 @@ match option:
     case "Overall Analysis":
         overall()
     case "Startups":
-        page_header(title="Startup Analysis", color="lightgreen")
+        page_header(title="Startup Analysis", color="lightgreen", size=2.5)
         startup = st.sidebar.selectbox(
             "Select a startup", df['startup'].unique().tolist())
         btn1 = st.sidebar.button('Find Startup details')

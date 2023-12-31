@@ -86,8 +86,9 @@ class Data:
 
     @staticmethod
     def stg(df, name):
+        df.rename(columns={'amount': 'amount in Cr.'}, inplace=True)
         res = df[df['startup'] == name].groupby(
-            'round')['amount'].sum()
+            'round')['amount in Cr.'].sum()
         return res.head()
 
     # Startup investor(s) ...
@@ -108,6 +109,8 @@ class Data:
     @staticmethod
     def inv(df, name):
         res = df[df['investors'] == name]
+        res = res.reset_index(drop=True)
+        res.index = res.index + 1
         return res.head()
 
     # ---------------------------------------------------------------------------------- #
