@@ -15,9 +15,9 @@ def lb(n=1):  # line breaks
         ''', unsafe_allow_html=True)
 
 
-def page_header(title, color):
+def page_header(title, color, size=2.8, top=100, bottom=50):
     st.markdown(f"""
-    <h1 style="text-align: center; color: {color}; font-size: 2.8rem">
+    <h1 style="text-align: center; color: {color}; font-size: {size}rem; margin-top: -{top}px; margin-bottom: -{bottom}px">
     {title}
     </h1>
     """, unsafe_allow_html=True)
@@ -39,12 +39,24 @@ df = pd.read_csv('resources/startup_cleaned.csv')
 
 st.set_page_config(layout='wide', page_title='Startup Analysis', page_icon='📊')
 
+st.markdown(
+    """
+        <style>
+        body {
+            margin: -50px;
+        }
+        </style>
+        """,
+    unsafe_allow_html=True
+)
+
 # ---------------------------------- C O N T E N T ---------------------------------- #
 
 
 def main():
-    page_header(title='Indian Startup Funding Dashboard', color='lightblue')
-    lb(4)
+    page_header(title='Indian Startup Funding Dashboard',
+                color='lightblue', size=2.8, top=30)
+    lb(2)
     c1, c2, c3 = st.columns((3, 10, 3), gap='medium')
     with c2:
         st.image('resources/dataset-cover.jpg',
@@ -53,7 +65,6 @@ def main():
         st.markdown("""
         ### Get a detailed analysis of Indian Startups based on a dataset from _Kaggle_. 📊
         """)
-        lb()
         st.markdown("""
         #### Dataset link - [Indian Startup Funding](https://www.kaggle.com/datasets/sudalairajkumar/indian-startup-funding)
         """)
@@ -74,8 +85,8 @@ def overall():
 
     # Rendered items ...
 
-    st.title("Overall Analysis")
-    st.divider()
+    page_header(title="Overall Analysis",
+                color="lightblue", size=2, bottom=60)
 
     st.subheader('Startup Investments _(in INR)_')
 
@@ -89,18 +100,15 @@ def overall():
         st.metric('Maximum', str(max) + 'Cr')
     with c3:
         st.metric('Average', str(mean) + 'Cr')
-    lb()
 
     c4, c5 = st.columns(2, gap='large')
     c4, padding, c5 = st.columns((10, 2, 10), gap='medium')
 
     with c4:  # LINE - CHART
         st.subheader('Month on Month Graph')
-        lb()
 
         opt = st.selectbox('Select the type of aggregation', [
                            'Total Investment', 'Investment Count'])
-        lb()
         match(opt):
             case 'Total Investment':
                 tdf = Data.momg1(df)
@@ -111,10 +119,8 @@ def overall():
             case 'Investment Count':
                 tdf2 = Data.momg2(df)
                 st.line_chart(data=tdf2, x='Month', y='Count of investments')
-        lb()
 
         st.subheader('Top 5 Startups')
-        lb()
 
         year1 = st.slider('Choose year for Startups', 2015, 2020, 2017)
         top5 = Data.top5st(df, year1)
@@ -126,15 +132,14 @@ def overall():
         top5 = px.pie(
             labels=cp.head().values,
             names=cp.head().index,
-            height=480,
+            height=436,
+            width=500,
             color_discrete_sequence=px.colors.sequential.dense_r,
             hole=0.4
         )
         st.plotly_chart(top5)
 
-        lb()
         st.subheader('Top 5 Investors')
-        lb()
 
         year2 = st.slider('Choose year for Investors', 2015, 2020, 2017)
         top5 = Data.top5inv(df, year2)
