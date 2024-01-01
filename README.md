@@ -1,5 +1,7 @@
 <h2 align="center">Indian Startup Funding Dashboard</h2>
+
 ---
+
 <p align="center">
 
 A [Streamlit](https://streamlit.io/) web app that performs **EDA** on the Indian Startup Funding dataset from **Kaggle**.
