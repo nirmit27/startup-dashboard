@@ -2,8 +2,6 @@
 
 A [Streamlit](https://streamlit.io/) web app that performs **EDA** on the Indian Startup Funding dataset from **Kaggle**.
 
-<br>
-
 ### Screenshot
 
 ![Overall Analysis](resources/ss.png)
