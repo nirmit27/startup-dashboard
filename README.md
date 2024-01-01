@@ -1,6 +1,5 @@
 <h2 align="center">Indian Startup Funding Dashboard</h2>
 
----
 
 <p align="center">
 
