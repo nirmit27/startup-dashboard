@@ -1,14 +1,14 @@
-<h3 align="center">Indian Startup Funding Dashboard</h3>
-
+<h2 align="center">Indian Startup Funding Dashboard</h2>
+---
 <p align="center">
 
 A [Streamlit](https://streamlit.io/) web app that performs **EDA** on the Indian Startup Funding dataset from **Kaggle**.
   
 </p>
 
-### Screenshot
+#### Screenshot
 
 ![Overall Analysis](resources/ss.png)
 
-### Dataset Link
+#### Dataset Link
 > [Indian Startup Funding](https://www.kaggle.com/datasets/sudalairajkumar/indian-startup-funding)
