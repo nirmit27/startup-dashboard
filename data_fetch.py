@@ -66,11 +66,9 @@ class Data:
         top5.set_index('Investor', inplace=True)
         return top5.query(f"year == {y}")[['Month', 'Amount in Cr.']].sort_values(by='Amount in Cr.', ascending=False).head()
 
-    # ---------------------------------------------------------------------------------- #
-
     # ------------------------------------- Page 2 ------------------------------------- #
 
-    # Startup Analysis
+    #  S T A R T U P   A N A L Y S I S
 
     # Startup details ...
 
@@ -100,17 +98,59 @@ class Data:
         res.index = res.index + 1
         return res
 
-    # ---------------------------------------------------------------------------------- #
-
     # ------------------------------------- Page 3 ------------------------------------- #
 
-    # Investor Analysis
+    #  I N V E S T O R   A N A L Y S I S
+
+    # Most recent investments (Top 5) ...
 
     @staticmethod
-    def inv(df, name):
-        res = df[df['investors'] == name]
-        res = res.reset_index(drop=True)
-        res.index = res.index + 1
-        return res.head()
+    def mrinv(df, name):
+        recent = df[df['investors'].str.contains(name)][['date', 'startup', 'vertical',
+                                                         'city', 'round', 'amount']].sort_values(by='date', ascending=False)
+        recent.rename(columns={'amount': 'amount in Cr.'}, inplace=True)
+        recent.set_index('date', inplace=True)
+        return recent.head()
 
-    # ---------------------------------------------------------------------------------- #
+    # Biggest investments ...  B A R
+
+    @staticmethod
+    def biginv(df, name):
+        df.rename(columns={'amount': 'Amount in Crores'}, inplace=True)
+        big = df[df['investors'].str.contains(name)].groupby(
+            'startup')['Amount in Crores'].sum().head()
+        return big
+
+    # Sectors invested ...  P I E  # 1
+
+    @staticmethod
+    def secinv(df, name):
+        sec = df[df['investors'].str.contains(name)].groupby(
+            'vertical')['amount'].sum().head()
+        return sec
+
+    # Stages invested ...   P I E  # 2
+
+    @staticmethod
+    def stginv(df, name):
+        stg = df[df['investors'].str.contains(
+            name)].groupby('round').sum().head()
+        return stg
+
+    # Cities ...            P I E  # 3
+
+    @staticmethod
+    def city(df, name):
+        ct = df[df['investors'].str.contains(name)].groupby('city')[
+            'amount'].sum().head()
+        return ct
+
+    # Year on Year investment ...
+
+    @staticmethod
+    def yrinv(df, name):
+        df.rename(columns={'amount': 'Amount in Crores',
+                  'year': 'Year'}, inplace=True)
+        yi = df[df['investors'].str.contains(
+            name)][['Amount in Crores', 'Year']]
+        return yi

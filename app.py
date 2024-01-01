@@ -55,18 +55,19 @@ st.markdown(
 
 def main():
     page_header(title='Indian Startup Funding Dashboard',
-                color='lightblue', size=2.8)
-    lb(2)
-    c1, c2, c3 = st.columns((3, 10, 3), gap='medium')
+                color='lightblue', size=2.5, top=80)
+    lb(3)
+    c1, c2, c3 = st.columns((3, 8, 3), gap='medium')
     with c2:
         st.image('resources/dataset-cover.jpg',
                  caption='Dataset cover image', use_column_width='auto')
         lb()
         st.markdown("""
-        ### Get a detailed analysis of Indian Startups based on a dataset from _Kaggle_. 📊
+        ##### A detailed analysis of Indian Startups based on a **Kaggle** dataset.
+        Choose an analysis option from the **dropdown menu** in the sidebar to view the corresponding details. 📊
         """)
         st.markdown("""
-        #### Dataset link - [Indian Startup Funding](https://www.kaggle.com/datasets/sudalairajkumar/indian-startup-funding)
+        > Dataset link - [Indian Startup Funding](https://www.kaggle.com/datasets/sudalairajkumar/indian-startup-funding)
         """)
 
 
@@ -104,7 +105,9 @@ def overall():
     c4, c5 = st.columns(2, gap='large')
     c4, padding, c5 = st.columns((10, 2, 10), gap='medium')
 
-    with c4:  # LINE - CHART
+    # LINE - CHART ...
+
+    with c4:
         st.subheader('Month on Month Graph')
 
         opt = st.selectbox('Select the type of aggregation', [
@@ -126,7 +129,9 @@ def overall():
         top5 = Data.top5st(df, year1)
         st.dataframe(top5, width=600)
 
-    with c5:  # PIE CHART
+     # PIE CHART ...
+
+    with c5:
         st.subheader('Top 5 Sectors')
         cp = Data.catpie(df)
         top5 = px.pie(
@@ -176,12 +181,67 @@ def startups(btn1, df, startup):
 
 
 def investors(btn2, df, investor):
+
     if btn2:
-        lb()
+
         st.header(investor)
         st.divider()
-        dfi = Data.inv(df, investor)
-        st.dataframe(dfi)
+
+        col1, padd, col2 = st.columns((7, 2, 7), gap='small')
+
+        with col1:
+            recent = Data.mrinv(df, investor)
+            sec = Data.secinv(df, investor)
+            city = Data.city(df, investor)
+
+            st.subheader('Most recent investments')
+            st.dataframe(recent)
+            lb(2)
+
+            st.subheader("Sectors of investment")
+            pie1 = px.pie(
+                labels=sec.values,
+                names=sec.index,
+                hole=0.4,
+                height=407,
+                width=550,
+                color_discrete_sequence=px.colors.sequential.Teal
+            )
+            st.plotly_chart(pie1)
+            lb(2)
+
+            st.subheader("Cities of investment")
+            pie3 = px.pie(
+                labels=city.values,
+                names=city.index,
+                hole=0.4,
+                height=407,
+                width=550,
+                color_discrete_sequence=px.colors.sequential.Darkmint_r
+            )
+            st.plotly_chart(pie3)
+
+        with col2:
+            yearly = Data.yrinv(df, investor)
+            top5 = Data.biginv(df, investor)
+            stg = Data.stginv(df, investor)
+
+            st.subheader('Top 5 investments')
+            st.bar_chart(top5, color='#7bbcb0')
+
+            st.subheader("Stages of investment")
+            pie2 = px.pie(
+                labels=stg.values,
+                names=stg.index,
+                hole=0.4,
+                height=300,
+                width=500,
+                color_discrete_sequence=px.colors.sequential.Darkmint
+            )
+            st.plotly_chart(pie2)
+
+            st.subheader("Year on year investment")
+            st.line_chart(yearly, x='Year', y='Amount in Crores')
 
     else:
         lb(2)
@@ -211,9 +271,9 @@ match option:
         btn1 = st.sidebar.button('Find Startup details')
         startups(btn1, df, startup)
     case "Investors":
-        page_header(title="Investor Analysis", color="lightgreen")
+        page_header(title="Investor Analysis", color="lightgreen", size=2.5)
         investor = st.sidebar.selectbox(
-            "Select an investor", df['investors'].unique().tolist())
+            "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
         btn2 = st.sidebar.button('Find Investor details')
         investors(btn2, df, investor)
 
