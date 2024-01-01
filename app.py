@@ -112,7 +112,7 @@ def overall():
 
         opt = st.selectbox('Select the type of aggregation', [
                            'Total Investment', 'Investment Count'])
-        match(opt):
+        match opt:
             case 'Total Investment':
                 tdf = Data.momg1(df)
 
