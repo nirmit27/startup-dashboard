@@ -126,7 +126,7 @@ class Data:
     @staticmethod
     def secinv(df, name):
         sec = df[df['investors'].str.contains(name)].groupby(
-            'vertical')['amount'].sum().head()
+            'vertical').sum().head()
         return sec
 
     # Stages invested ...   P I E  # 2
@@ -141,8 +141,8 @@ class Data:
 
     @staticmethod
     def city(df, name):
-        ct = df[df['investors'].str.contains(name)].groupby('city')[
-            'amount'].sum().head()
+        ct = df[df['investors'].str.contains(
+            name)].groupby('city').sum().head()
         return ct
 
     # Year on Year investment ...
@@ -151,6 +151,8 @@ class Data:
     def yrinv(df, name):
         df.rename(columns={'amount': 'Amount in Crores',
                   'year': 'Year'}, inplace=True)
-        yi = df[df['investors'].str.contains(
-            name)][['Amount in Crores', 'Year']]
+        # yi = df[df['investors'].str.contains(
+        #     name)][['Amount in Crores', 'Year']]
+        yi = df[df['investors'].str.contains(name)].groupby('Year')[
+            'Amount in Crores'].sum()
         return yi

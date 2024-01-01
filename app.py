@@ -194,65 +194,66 @@ def startups(btn1, df, startup):
 def investors(btn2, df, investor):
 
     if btn2:
-
         st.header(investor)
         st.divider()
 
         col1, padd, col2 = st.columns((7, 2, 7), gap='small')
+        col3, padd, col4 = st.columns((7, 2, 7), gap='small')
+        col5, padd, col6 = st.columns((7, 2, 7), gap='small')
 
         with col1:
             recent = Data.mrinv(df, investor)
-            sec = Data.secinv(df, investor)
-            city = Data.city(df, investor)
-
             st.subheader('Most recent investments')
             st.dataframe(recent)
-            lb(2)
 
+        with col2:
+            top5 = Data.biginv(df, investor)
+            st.subheader('Top 5 investments')
+            st.bar_chart(top5, color='#7bbcb0')
+
+        with col3:
+            sec = Data.secinv(df, investor)
             st.subheader("Sectors of investment")
             pie1 = px.pie(
                 labels=sec.values,
                 names=sec.index,
                 hole=0.4,
-                height=407,
-                width=550,
+                height=400,
+                width=500,
                 color_discrete_sequence=px.colors.sequential.Teal
             )
             st.plotly_chart(pie1)
-            lb(2)
 
+        with col4:
+            city = Data.city(df, investor)
             st.subheader("Cities of investment")
             pie3 = px.pie(
                 labels=city.values,
                 names=city.index,
                 hole=0.4,
-                height=407,
-                width=550,
+                height=400,
+                width=500,
                 color_discrete_sequence=px.colors.sequential.Darkmint_r
             )
             st.plotly_chart(pie3)
 
-        with col2:
-            yearly = Data.yrinv(df, investor)
-            top5 = Data.biginv(df, investor)
+        with col5:
             stg = Data.stginv(df, investor)
-
-            st.subheader('Top 5 investments')
-            st.bar_chart(top5, color='#7bbcb0')
-
             st.subheader("Stages of investment")
             pie2 = px.pie(
                 labels=stg.values,
                 names=stg.index,
                 hole=0.4,
-                height=300,
+                height=400,
                 width=500,
                 color_discrete_sequence=px.colors.sequential.Darkmint
             )
             st.plotly_chart(pie2)
 
+        with col6:
+            yearly = Data.yrinv(df, investor)
             st.subheader("Year on year investment")
-            st.line_chart(yearly, x='Year', y='Amount in Crores')
+            st.line_chart(yearly, y='Amount in Crores')
 
     else:
         lb(2)
