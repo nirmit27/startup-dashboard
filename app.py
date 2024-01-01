@@ -112,16 +112,27 @@ def overall():
 
         opt = st.selectbox('Select the type of aggregation', [
                            'Total Investment', 'Investment Count'])
-        match opt:
-            case 'Total Investment':
-                tdf = Data.momg1(df)
 
-                # Graph 1
-                st.line_chart(data=tdf, x='Month', y='Amount in Crores')
+        # match opt:
+        #     case 'Total Investment':
+        #         tdf = Data.momg1(df)
 
-            case 'Investment Count':
-                tdf2 = Data.momg2(df)
-                st.line_chart(data=tdf2, x='Month', y='Count of investments')
+        #         # Graph 1
+        #         st.line_chart(data=tdf, x='Month', y='Amount in Crores')
+
+        #     case 'Investment Count':
+        #         tdf2 = Data.momg2(df)
+        #         st.line_chart(data=tdf2, x='Month', y='Count of investments')
+
+        if (opt == "Total Investment"):
+            tdf = Data.momg1(df)
+
+            # Graph 1
+            st.line_chart(data=tdf, x='Month', y='Amount in Crores')
+
+        elif (opt == "Investment Count"):
+            tdf2 = Data.momg2(df)
+            st.line_chart(data=tdf2, x='Month', y='Count of investments')
 
         st.subheader('Top 5 Startups')
 
@@ -258,20 +269,37 @@ lb()
 option = st.sidebar.selectbox('Choose analysis option', [
                               "Data", "Overall Analysis", "Startups", "Investors"])
 
-match option:
-    case "Data":
-        main()
-    case "Overall Analysis":
-        overall()
-    case "Startups":
-        page_header(title="Startup Analysis", color="lightgreen", size=2.5)
-        startup = st.sidebar.selectbox(
-            "Select a startup", df['startup'].unique().tolist())
-        btn1 = st.sidebar.button('Find Startup details')
-        startups(btn1, df, startup)
-    case "Investors":
-        page_header(title="Investor Analysis", color="lightgreen", size=2.5)
-        investor = st.sidebar.selectbox(
-            "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
-        btn2 = st.sidebar.button('Find Investor details')
-        investors(btn2, df, investor)
+# match option:
+#     case "Data":
+#         main()
+#     case "Overall Analysis":
+#         overall()
+#     case "Startups":
+#         page_header(title="Startup Analysis", color="lightgreen", size=2.5)
+#         startup = st.sidebar.selectbox(
+#             "Select a startup", df['startup'].unique().tolist())
+#         btn1 = st.sidebar.button('Find Startup details')
+#         startups(btn1, df, startup)
+#     case "Investors":
+#         page_header(title="Investor Analysis", color="lightgreen", size=2.5)
+#         investor = st.sidebar.selectbox(
+#             "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
+#         btn2 = st.sidebar.button('Find Investor details')
+#         investors(btn2, df, investor)
+
+if (option == "Data"):
+    main()
+elif (option == "Overall Analysis"):
+    overall()
+elif (option == "Startups"):
+    page_header(title="Startup Analysis", color="lightgreen", size=2.5)
+    startup = st.sidebar.selectbox(
+        "Select a startup", df['startup'].unique().tolist())
+    btn1 = st.sidebar.button('Find Startup details')
+    startups(btn1, df, startup)
+elif (option == "Investors"):
+    page_header(title="Investor Analysis", color="lightgreen", size=2.5)
+    investor = st.sidebar.selectbox(
+        "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
+    btn2 = st.sidebar.button('Find Investor details')
+    investors(btn2, df, investor)
