@@ -247,7 +247,6 @@ def investors(btn2, df, investor):
         lb(2)
         text("Select an <b style='color:lightblue'>investor</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
 
-# ----------------------------------------------------------------------------------- #
 
 # ---------------------------------- S I D E B A R ---------------------------------- #
 
@@ -276,5 +275,3 @@ match option:
             "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
         btn2 = st.sidebar.button('Find Investor details')
         investors(btn2, df, investor)
-
-# ----------------------------------------------------------------------------------- #
