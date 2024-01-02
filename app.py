@@ -202,8 +202,8 @@ def investors(btn2, df, investor):
 
             # Chart LEGEND colors ...
 
-            ax.tick_params(axis='x', colors='white')
-            ax.tick_params(axis='y', colors='white')
+            ax.tick_params(axis='x', colors='white', labelsize=7)
+            ax.tick_params(axis='y', colors='white', labelsize=7)
 
             # Chart BORDER colors ...
 
@@ -212,8 +212,8 @@ def investors(btn2, df, investor):
             ax.spines['left'].set_color('white')
             ax.spines['right'].set_color(ch_color)
 
-            plt.xlabel("Startup", color="white", fontsize=12)
-            plt.ylabel("Amount in Crores", color="white", fontsize=12)
+            plt.xlabel("Startup", color="white", fontsize=10)
+            plt.ylabel("Amount in Crores", color="white", fontsize=10)
 
             st.pyplot(fig)
 
