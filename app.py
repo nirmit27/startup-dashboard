@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 from data_fetch import Data
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 # Utility functions
 
@@ -37,6 +38,7 @@ df = pd.read_csv('resources/startup_cleaned.csv')
 
 # Page Configuration ...
 
+ch_color = "#0e1117"
 st.set_page_config(layout='wide', page_title='Startup Analysis', page_icon='📊')
 
 # ---------------------------------- C O N T E N T ---------------------------------- #
@@ -188,7 +190,32 @@ def investors(btn2, df, investor):
         with col2:
             top5 = Data.biginv(df, investor)
             st.subheader('Top 5 investments')
-            st.bar_chart(top5, color='#7bbcb0')
+
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.bar(top5['Startup'], top5['Amount in Crores'],
+                   color="lightblue")
+
+            # Chart Color Customization ...
+
+            ax.set_facecolor(ch_color)
+            fig.set_facecolor(ch_color)
+
+            # Chart LEGEND colors ...
+
+            ax.tick_params(axis='x', colors='white')
+            ax.tick_params(axis='y', colors='white')
+
+            # Chart BORDER colors ...
+
+            ax.spines['top'].set_color(ch_color)
+            ax.spines['bottom'].set_color('white')
+            ax.spines['left'].set_color('white')
+            ax.spines['right'].set_color(ch_color)
+
+            plt.xlabel("Startup", color="white")
+            plt.ylabel("Amount in Crores", color="white")
+
+            st.pyplot(fig)
 
         with col3:
             sec = Data.secinv(df, investor)

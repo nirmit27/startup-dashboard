@@ -116,10 +116,16 @@ class Data:
 
     @staticmethod
     def biginv(df, name):
-        df.rename(columns={'amount': 'Amount in Crores'}, inplace=True)
-        big = df[df['investors'].str.contains(name)].groupby(
-            'startup')['Amount in Crores'].sum().head()
-        return big
+        df.rename(columns={'amount': 'Amount in Crores',
+                  'startup': 'Startup'}, inplace=True)
+        big = df[df['investors'].str.contains(name)].groupby('Startup')[
+            'Amount in Crores'].sum()
+
+        big.sort_values(inplace=True, ascending=False)
+
+        big = big.reset_index()
+
+        return big.head()
 
     # Sectors invested ...  P I E  # 1
 
