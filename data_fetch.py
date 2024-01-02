@@ -38,9 +38,9 @@ class Data:
 
     @staticmethod
     def catpie(df):
-        cat = df.groupby('vertical')[['vertical', 'amount']].head(5)
-        cat = cat.set_index('vertical')
-        return cat
+        cat = df.groupby('vertical')['amount'].sum()
+        cat = cat.sort_values(ascending=False)
+        return cat.head()
 
     # for Top 5 Startups DF ...
 
@@ -126,7 +126,8 @@ class Data:
     @staticmethod
     def secinv(df, name):
         sec = df[df['investors'].str.contains(name)].groupby(
-            'vertical').sum().head()
+            'vertical')[
+            'Amount in Crores'].sum().head()
         return sec
 
     # Stages invested ...   P I E  # 2
@@ -134,15 +135,15 @@ class Data:
     @staticmethod
     def stginv(df, name):
         stg = df[df['investors'].str.contains(
-            name)].groupby('round').sum().head()
+            name)].groupby('round')['Amount in Crores'].sum().head()
         return stg
 
     # Cities ...            P I E  # 3
 
     @staticmethod
     def city(df, name):
-        ct = df[df['investors'].str.contains(
-            name)].groupby('city').sum().head()
+        ct = df[df['investors'].str.contains(name)].groupby('city')[
+            'Amount in Crores'].sum().head()
         return ct
 
     # Year on Year investment ...
@@ -151,8 +152,6 @@ class Data:
     def yrinv(df, name):
         df.rename(columns={'amount': 'Amount in Crores',
                   'year': 'Year'}, inplace=True)
-        # yi = df[df['investors'].str.contains(
-        #     name)][['Amount in Crores', 'Year']]
         yi = df[df['investors'].str.contains(name)].groupby('Year')[
             'Amount in Crores'].sum()
         return yi

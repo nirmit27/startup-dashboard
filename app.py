@@ -39,17 +39,6 @@ df = pd.read_csv('resources/startup_cleaned.csv')
 
 st.set_page_config(layout='wide', page_title='Startup Analysis', page_icon='📊')
 
-st.markdown(
-    """
-        <style>
-        body {
-            margin: -50px;
-        }
-        </style>
-        """,
-    unsafe_allow_html=True
-)
-
 # ---------------------------------- C O N T E N T ---------------------------------- #
 
 
@@ -87,23 +76,22 @@ def overall():
     # Rendered items ...
 
     page_header(title="Overall Analysis",
-                color="lightblue", size=2, bottom=60)
-
-    st.subheader('Startup Investments _(in INR)_')
+                color="lightblue", size=2.25)
+    st.divider()
 
     # C O L U M N S ...
 
     c1, c2, c3 = st.columns(3, gap='large')
 
     with c1:
-        st.metric('Total', str(total) + 'Cr')
+        st.metric('Total Investment', str(total) + 'Cr')
     with c2:
-        st.metric('Maximum', str(max) + 'Cr')
+        st.metric('Maximum Investment', str(max) + 'Cr')
     with c3:
-        st.metric('Average', str(mean) + 'Cr')
+        st.metric('Average Investment', str(mean) + 'Cr')
 
-    c4, c5 = st.columns(2, gap='large')
     c4, padding, c5 = st.columns((10, 2, 10), gap='medium')
+    c6, padding, c7 = st.columns((10, 2, 10), gap='medium')
 
     # LINE - CHART ...
 
@@ -123,27 +111,30 @@ def overall():
             tdf2 = Data.momg2(df)
             st.line_chart(data=tdf2, x='Month', y='Count of investments')
 
-        st.subheader('Top 5 Startups')
-
-        year1 = st.slider('Choose year for Startups', 2015, 2020, 2017)
-        top5 = Data.top5st(df, year1)
-        st.dataframe(top5, width=600)
-
      # PIE CHART ...
 
     with c5:
         st.subheader('Top 5 Sectors')
         cp = Data.catpie(df)
         top5 = px.pie(
-            labels=cp.head().values,
-            names=cp.head().index,
-            height=436,
+            labels=cp.index.values,
+            values=cp.values,
+            names=cp.index.values,
+            height=400,
             width=500,
-            color_discrete_sequence=px.colors.sequential.dense_r,
+            color_discrete_sequence=px.colors.sequential.Tealgrn_r,
             hole=0.4
         )
         st.plotly_chart(top5)
 
+    with c6:
+        st.subheader('Top 5 Startups')
+
+        year1 = st.slider('Choose year for Startups', 2015, 2020, 2017)
+        top5 = Data.top5st(df, year1)
+        st.dataframe(top5, width=600)
+
+    with c7:
         st.subheader('Top 5 Investors')
 
         year2 = st.slider('Choose year for Investors', 2015, 2020, 2017)
@@ -204,8 +195,9 @@ def investors(btn2, df, investor):
             sec = Data.secinv(df, investor)
             st.subheader("Sectors of investment")
             pie1 = px.pie(
-                labels=sec.values,
-                names=sec.index,
+                labels=sec.index.values,
+                values=sec.values,
+                names=sec.index.values,
                 hole=0.4,
                 height=400,
                 width=500,
@@ -216,26 +208,27 @@ def investors(btn2, df, investor):
         with col4:
             city = Data.city(df, investor)
             st.subheader("Cities of investment")
-            pie3 = px.pie(
-                labels=city.values,
-                names=city.index,
-                hole=0.4,
-                height=400,
-                width=500,
-                color_discrete_sequence=px.colors.sequential.Darkmint_r
-            )
+            pie3 = px.pie(labels=city.index.values,
+                          values=city.values,
+                          names=city.index.values,
+                          hole=0.4,
+                          height=400,
+                          width=500,
+                          color_discrete_sequence=px.colors.sequential.Darkmint_r
+                          )
             st.plotly_chart(pie3)
 
         with col5:
             stg = Data.stginv(df, investor)
             st.subheader("Stages of investment")
             pie2 = px.pie(
-                labels=stg.values,
-                names=stg.index,
+                labels=stg.index.values,
+                values=stg.values,
+                names=stg.index.values,
                 hole=0.4,
                 height=400,
                 width=500,
-                color_discrete_sequence=px.colors.sequential.Darkmint
+                color_discrete_sequence=px.colors.sequential.Blugrn_r
             )
             st.plotly_chart(pie2)
 
