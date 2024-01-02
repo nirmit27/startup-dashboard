@@ -202,8 +202,8 @@ def investors(btn2, df, investor):
 
             # Chart LEGEND colors ...
 
-            ax.tick_params(axis='x', colors='white', labelsize=7)
-            ax.tick_params(axis='y', colors='white', labelsize=7)
+            ax.tick_params(axis='x', colors='white', labelsize=8)
+            ax.tick_params(axis='y', colors='white', labelsize=8)
 
             # Chart BORDER colors ...
 
