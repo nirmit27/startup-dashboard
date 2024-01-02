@@ -77,7 +77,6 @@ def overall():
 
     page_header(title="Overall Analysis",
                 color="lightblue", size=2.25)
-    st.divider()
 
     # C O L U M N S ...
 
