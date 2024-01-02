@@ -212,8 +212,8 @@ def investors(btn2, df, investor):
             ax.spines['left'].set_color('white')
             ax.spines['right'].set_color(ch_color)
 
-            plt.xlabel("Startup", color="white")
-            plt.ylabel("Amount in Crores", color="white")
+            plt.xlabel("Startup", color="white", fontsize=12)
+            plt.ylabel("Amount in Crores", color="white", fontsize=12)
 
             st.pyplot(fig)
 
