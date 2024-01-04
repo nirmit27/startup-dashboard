@@ -1,8 +1,5 @@
 """ Data Cleaning """
 
-import numpy as np
-import pandas as pd
-
 
 class Data:
 
@@ -16,8 +13,7 @@ class Data:
         tdf['Y'] = tdf['amount'] / 10000
         tdf.rename(columns={'Y': 'Amount in Crores'}, inplace=True)
         for i in range(tdf.shape[0]):
-            tdf.at[i,
-                   'Month'] = f"{tdf.at[i, 'month'][:3]} '{tdf.at[i, 'year'] - 2000}"
+            tdf.at[i, 'Month'] = f"{tdf.at[i, 'month'][:3]} '{tdf.at[i, 'year'] - 2000}"
         tdf.drop(columns=['year', 'month'], inplace=True)
         return tdf
 
@@ -29,8 +25,7 @@ class Data:
             'amount'].count().reset_index()
         tdf2.rename(columns={'amount': 'Count of investments'}, inplace=True)
         for i in range(tdf2.shape[0]):
-            tdf2.at[i,
-                    'Month'] = f"{tdf2.at[i, 'month'][:3]} {tdf2.at[i, 'year'] - 2000}"
+            tdf2.at[i, 'Month'] = f"{tdf2.at[i, 'month'][:3]} '{tdf2.at[i, 'year'] - 2000}"
         tdf2.drop(columns=['year', 'month'], inplace=True)
         return tdf2
 
@@ -50,9 +45,10 @@ class Data:
             'amount'].sum().reset_index()
         top5['amount'] = top5['amount'] / 10000
         top5.rename(columns={'amount': "Amount in Cr.",
-                    'month': 'Month', 'startup': 'Startup'}, inplace=True)
+                             'month': 'Month', 'startup': 'Startup'}, inplace=True)
         top5.set_index('Startup', inplace=True)
-        return top5.query(f"year == {y}")[['Month', 'Amount in Cr.']].head().sort_values(by='Amount in Cr.', ascending=False).head()
+        return top5.query(f"year == {y}")[['Month', 'Amount in Cr.']].head().sort_values(by='Amount in Cr.',
+                                                                                         ascending=False).head()
 
     # for Top 5 Investors DF ...
 
@@ -62,9 +58,10 @@ class Data:
             'amount'].sum().reset_index()
         top5['amount'] = top5['amount'] / 10000
         top5.rename(columns={'amount': "Amount in Cr.",
-                    'month': 'Month', 'investors': 'Investor'}, inplace=True)
+                             'month': 'Month', 'investors': 'Investor'}, inplace=True)
         top5.set_index('Investor', inplace=True)
-        return top5.query(f"year == {y}")[['Month', 'Amount in Cr.']].sort_values(by='Amount in Cr.', ascending=False).head()
+        return top5.query(f"year == {y}")[['Month', 'Amount in Cr.']].sort_values(by='Amount in Cr.',
+                                                                                  ascending=False).head()
 
     # ------------------------------------- Page 2 ------------------------------------- #
 
@@ -107,7 +104,8 @@ class Data:
     @staticmethod
     def mrinv(df, name):
         recent = df[df['investors'].str.contains(name)][['date', 'startup', 'vertical',
-                                                         'city', 'round', 'amount']].sort_values(by='date', ascending=False)
+                                                         'city', 'round', 'amount']].sort_values(by='date',
+                                                                                                 ascending=False)
         recent.rename(columns={'amount': 'amount in Cr.'}, inplace=True)
         recent.set_index('date', inplace=True)
         return recent.head()
@@ -117,7 +115,7 @@ class Data:
     @staticmethod
     def biginv(df, name):
         df.rename(columns={'amount': 'Amount in Crores',
-                  'startup': 'Startup'}, inplace=True)
+                           'startup': 'Startup'}, inplace=True)
         big = df[df['investors'].str.contains(name)].groupby('Startup')[
             'Amount in Crores'].sum()
 
@@ -157,7 +155,7 @@ class Data:
     @staticmethod
     def yrinv(df, name):
         df.rename(columns={'amount': 'Amount in Crores',
-                  'year': 'Year'}, inplace=True)
+                           'year': 'Year'}, inplace=True)
         yi = df[df['investors'].str.contains(name)].groupby('Year')[
             'Amount in Crores'].sum()
         return yi

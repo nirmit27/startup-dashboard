@@ -6,6 +6,7 @@ from data_fetch import Data
 import plotly.express as px
 import matplotlib.pyplot as plt
 
+
 # Utility functions
 
 
@@ -41,6 +42,7 @@ df = pd.read_csv('resources/startup_cleaned.csv')
 ch_color = "#0e1117"
 st.set_page_config(layout='wide', page_title='Startup Analysis', page_icon='📊')
 
+
 # ---------------------------------- C O N T E N T ---------------------------------- #
 
 
@@ -63,7 +65,6 @@ def main():
 
 
 def overall():
-
     # Data items ...
 
     sdf = df.groupby(by="startup").amount
@@ -100,19 +101,19 @@ def overall():
         st.subheader('Month on Month Graph')
 
         opt = st.selectbox('Select the type of aggregation', [
-                           'Total Investment', 'Investment Count'])
+            'Total Investment', 'Investment Count'])
 
-        if (opt == "Total Investment"):
+        if opt == "Total Investment":
             tdf = Data.momg1(df)
 
             # Graph 1
             st.line_chart(data=tdf, x='Month', y='Amount in Crores')
 
-        elif (opt == "Investment Count"):
+        elif opt == "Investment Count":
             tdf2 = Data.momg2(df)
             st.line_chart(data=tdf2, x='Month', y='Count of investments')
 
-     # PIE CHART ...
+    # PIE CHART ...
 
     with c5:
         st.subheader('Top 5 Sectors')
@@ -169,11 +170,11 @@ def startups(btn1, df, startup):
 
     else:
         lb(2)
-        text("Select a <b style='color:lightblue'>startup</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
+        text(
+            "Select a <b style='color:lightblue'>startup</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
 
 
 def investors(btn2, df, investor):
-
     if btn2:
         st.header(investor)
         st.divider()
@@ -265,7 +266,8 @@ def investors(btn2, df, investor):
 
     else:
         lb(2)
-        text("Select an <b style='color:lightblue'>investor</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
+        text(
+            "Select an <b style='color:lightblue'>investor</b> name from the dropdown menu located in the <b>sidebar</b> to view their details.")
 
 
 # ---------------------------------- S I D E B A R ---------------------------------- #
@@ -276,19 +278,19 @@ st.sidebar.title('Startup Funding Analysis')
 lb()
 
 option = st.sidebar.selectbox('Choose analysis option', [
-                              "Data", "Overall Analysis", "Startups", "Investors"])
+    "Data", "Overall Analysis", "Startups", "Investors"])
 
-if (option == "Data"):
+if option == "Data":
     main()
-elif (option == "Overall Analysis"):
+elif option == "Overall Analysis":
     overall()
-elif (option == "Startups"):
+elif option == "Startups":
     page_header(title="Startup Analysis", color="lightgreen", size=2.5)
     startup = st.sidebar.selectbox(
         "Select a startup", df['startup'].unique().tolist())
     btn1 = st.sidebar.button('Find Startup details')
     startups(btn1, df, startup)
-elif (option == "Investors"):
+elif option == "Investors":
     page_header(title="Investor Analysis", color="lightgreen", size=2.5)
     investor = st.sidebar.selectbox(
         "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
