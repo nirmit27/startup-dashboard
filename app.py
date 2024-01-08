@@ -293,6 +293,6 @@ elif option == "Startups":
 elif option == "Investors":
     page_header(title="Investor Analysis", color="lightgreen", size=2.5)
     investor = st.sidebar.selectbox(
-        "Select an investor", sorted(set(df['investors'].str.split(',').sum()))[1:])
+        "Select an investor", Data.investor_list(df))
     btn2 = st.sidebar.button('Find Investor details')
     investors(btn2, df, investor)

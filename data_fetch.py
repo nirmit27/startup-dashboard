@@ -3,6 +3,11 @@
 
 class Data:
 
+    @staticmethod
+    def investor_list(df):
+        il = sorted(set(df['investors'].str.split(', ').sum()))
+        return il
+
     # ------------------------------------- Page 1 ------------------------------------- #
 
     # for Line Chart - Option 1
@@ -13,7 +18,8 @@ class Data:
         tdf['Y'] = tdf['amount'] / 10000
         tdf.rename(columns={'Y': 'Amount in Crores'}, inplace=True)
         for i in range(tdf.shape[0]):
-            tdf.at[i, 'Month'] = f"{tdf.at[i, 'month'][:3]} '{tdf.at[i, 'year'] - 2000}"
+            tdf.at[i,
+                   'Month'] = f"{tdf.at[i, 'month'][:3]} '{tdf.at[i, 'year'] - 2000}"
         tdf.drop(columns=['year', 'month'], inplace=True)
         return tdf
 
@@ -25,7 +31,8 @@ class Data:
             'amount'].count().reset_index()
         tdf2.rename(columns={'amount': 'Count of investments'}, inplace=True)
         for i in range(tdf2.shape[0]):
-            tdf2.at[i, 'Month'] = f"{tdf2.at[i, 'month'][:3]} '{tdf2.at[i, 'year'] - 2000}"
+            tdf2.at[i,
+                    'Month'] = f"{tdf2.at[i, 'month'][:3]} '{tdf2.at[i, 'year'] - 2000}"
         tdf2.drop(columns=['year', 'month'], inplace=True)
         return tdf2
 
