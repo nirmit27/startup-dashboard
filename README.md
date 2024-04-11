@@ -1,7 +1,9 @@
 <h1 align="center">Indian Startup Funding Dashboard</h1>
 
 <p align="center">
+  
 A [Streamlit](https://streamlit.io/) web app that performs exploratory data analysis on the **Indian Startup Funding** dataset from **Kaggle**.
+
 </p>
 
 ## Preview
