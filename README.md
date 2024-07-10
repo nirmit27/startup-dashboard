@@ -4,14 +4,14 @@
 A <a href="https://streamlit.io/" target="_blank">Streamlit</a> web application that performs Exploratory Data Analysis on the <b>Indian Startup Funding</b> dataset from <b>Kaggle</b>.
 </p>
 
-## Preview
+### Preview
 
 ![Overall Analysis](resources/oass.png)
 
-## Deployment Link
+### Deployment Link
 
 > [Startup Analysis](https://startup-dashboard-q7x5h9fmtdyuxmd5ivkkns.streamlit.app/)
 
-## Dataset Link
+### Dataset Link
 
 > [Indian Startup Funding](https://www.kaggle.com/datasets/sudalairajkumar/indian-startup-funding)
