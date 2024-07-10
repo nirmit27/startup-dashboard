@@ -4,8 +4,6 @@
 A <a href="https://streamlit.io/" target="_blank">Streamlit</a> web application that performs Exploratory Data Analysis on the <b>Indian Startup Funding</b> dataset from <b>Kaggle</b>.
 </p>
 
-<br>
-
 ## Preview
 
 ![Overall Analysis](resources/oass.png)
