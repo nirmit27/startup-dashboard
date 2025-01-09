@@ -12,7 +12,8 @@ A <a href="https://streamlit.io/" target="_blank">Streamlit</a> web application 
 
 > [Indian Startup Funding](https://www.kaggle.com/datasets/sudalairajkumar/indian-startup-funding)
 
+<!--
 ### Deployment Link
 
 > [Startup Analysis](https://startup-dashboard-q7x5h9fmtdyuxmd5ivkkns.streamlit.app/)
-
+-->
